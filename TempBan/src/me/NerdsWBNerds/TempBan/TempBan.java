@@ -32,7 +32,11 @@ public class TempBan extends JavaPlugin {
 		if(file.exists()){
 			Banned = load();
 	    }
-			
+
+		this.getCommand("tempban").setExecutor(new CommandExec(this));
+		this.getCommand("tempbanexact").setExecutor(new CommandExec(this));
+		this.getCommand("unban").setExecutor(new CommandExec(this));
+		this.getCommand("check").setExecutor(new CommandExec(this));
 	}
 	
 	public void onDisable(){
