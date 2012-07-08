@@ -38,6 +38,6 @@ public class TBListener implements Listener{
 	}
 	
 	public HashMap<String, Long> getBanned(){
-		return TempBan.Banned;
+		return TempBan.banned;
 	}
 }

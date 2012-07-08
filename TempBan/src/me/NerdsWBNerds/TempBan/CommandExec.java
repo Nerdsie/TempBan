@@ -84,7 +84,7 @@ public class CommandExec implements CommandExecutor {
 	
 					String message = getMSG(endOfBan);
 					
-					plugin.server.broadcastMessage(GOLD + "[TempBan] " + GREEN + "The player " + AQUA + args[1].toLowerCase() + GREEN + " is now banned for " + AQUA + message);
+					plugin.server.broadcastMessage(GOLD + "[TempBan] " + GREEN + "The player " + AQUA + args[0].toLowerCase() + GREEN + " is now banned for " + AQUA + message);
 					return true;
 				}else{
 					player.sendMessage(ChatColor.RED + "Error: Unit or time not valid.");
@@ -173,7 +173,7 @@ public class CommandExec implements CommandExecutor {
 			
 			if(cmd.getName().equalsIgnoreCase("tempbanexact")){
 				if(args.length!=3){
-					System.out.println("Error: /tempban <player> <amount> <unit>");
+					System.out.println("Error: /tempbanexact <player> <amount> <unit>");
 					return true;
 				}
 				
@@ -187,7 +187,7 @@ public class CommandExec implements CommandExecutor {
 	
 					String message = getMSG(endOfBan);
 					
-					plugin.server.broadcastMessage("[TempBan] The player " + args[1].toLowerCase() + " is now banned for " + message);
+					plugin.server.broadcastMessage("[TempBan] The player " + args[0].toLowerCase() + " is now banned for " + message);
 					return true;
 				}else{
 					System.out.println("Error: Unit or time not valid.");
@@ -205,6 +205,7 @@ public class CommandExec implements CommandExecutor {
 				
 				if(getBanned().containsKey(target.toLowerCase())){
 					getBanned().remove(target.toLowerCase());
+					plugin.getServer().getPlayerExact(target).setBanned(false);
 					System.out.println("[TempBan] The player " + args[0] + " is now un-banned.");
 					return true;
 				}else{
@@ -235,7 +236,7 @@ public class CommandExec implements CommandExecutor {
 	}
 
 	public HashMap<String, Long> getBanned(){
-		return TempBan.Banned;
+		return TempBan.banned;
 	}
 	
 	public void setBanned(String name, long end){

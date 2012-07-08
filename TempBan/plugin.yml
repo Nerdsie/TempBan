@@ -1,6 +1,6 @@
 name: TempBan
 main: me.NerdsWBNerds.TempBan.TempBan
-version: 1.1
+version: 1.2
 commands:
    tempban:
       description: Used to temporarily ban online players.

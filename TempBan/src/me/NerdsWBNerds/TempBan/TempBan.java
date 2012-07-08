@@ -13,7 +13,7 @@ import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TempBan extends JavaPlugin {
-	public static HashMap<String, Long> Banned = new HashMap<String, Long>();
+	public static HashMap<String, Long> banned = new HashMap<String, Long>();
 	
 	public static String Path = "plugins/TempBan" + File.separator + "BanList.dat";
 	public TBListener Listener = new TBListener(this);
@@ -30,8 +30,12 @@ public class TempBan extends JavaPlugin {
 		new File("plugins/TempBan").mkdir();
 	    
 		if(file.exists()){
-			Banned = load();
+			banned = load();
 	    }
+		
+		if(banned == null){
+			banned = new HashMap<String, Long>();
+		}
 
 		this.getCommand("tempban").setExecutor(new CommandExec(this));
 		this.getCommand("tempbanexact").setExecutor(new CommandExec(this));
@@ -57,7 +61,7 @@ public class TempBan extends JavaPlugin {
 	    
 		try{
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(Path));
-			oos.writeObject(Banned);
+			oos.writeObject(banned);
 			oos.flush();
 			oos.close();
 			//Handle I/O exceptions
@@ -72,6 +76,7 @@ public class TempBan extends JavaPlugin {
 		try{
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Path));
 			Object result = ois.readObject();
+			ois.close();
 			return (HashMap<String,Long>)result;
 		}catch(Exception e){
 			return null;
