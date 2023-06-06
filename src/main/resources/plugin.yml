@@ -4,6 +4,7 @@ version: ${project.version}
 description: ${project.description}
 author: NerdsWBNerds
 url: ${project.url}
+api-version: 1.13
 commands:
    tempban:
       description: Used to temporarily ban online players.

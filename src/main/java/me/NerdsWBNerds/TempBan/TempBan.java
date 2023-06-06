@@ -37,6 +37,12 @@ public class TempBan extends JavaPlugin {
 			banned = new HashMap<String, Long>();
 		}
 
+		try {
+			Metrics metrics = new Metrics(this, 18675);
+		} catch (Exception e) {
+			System.out.println("[TempBan] Failed to start Metrics.");
+		}
+
 		this.getCommand("tempban").setExecutor(new CommandExec(this));
 		this.getCommand("tempbanexact").setExecutor(new CommandExec(this));
 		this.getCommand("unban").setExecutor(new CommandExec(this));
