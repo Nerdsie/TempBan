@@ -11,6 +11,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import org.apache.commons.lang.StringUtils;
+
 public class CommandExec implements CommandExecutor {
 	public TempBan plugin;
 	
@@ -25,6 +27,13 @@ public class CommandExec implements CommandExecutor {
 			return true;
 		}
 
+		if(args.length < 3) {
+			sender.sendMessage(ChatColor.RED + "[TempBan] Usage: /tempban <player> <time> <unit> [reason]");
+			return true;
+		}
+
+		String reason = args.length > 3 ? StringUtils.join(args, ' ', 3, args.length) : null;
+
 		long now = System.currentTimeMillis();
 		long endOfBan = now + BanUnit.getTicks(args[2], Integer.parseInt(args[1]));
 		long diff = endOfBan - now;
@@ -32,12 +41,12 @@ public class CommandExec implements CommandExecutor {
 		String remainingTimeString = getMSG(endOfBan);
 
 		if(diff <= 0){
-			sender.sendMessage(ChatColor.RED + "[TempBan] Error: Attempting to ban for a negative amount of time.");
+			sender.sendMessage(ChatColor.RED + "[TempBan] Error: Invalid amount or unit (valid units: sec, min, hour, day, month, year)");
 			return true;
 		}
 
 		Date endOfBanDate = new Date(endOfBan);
-		BanEntry entry = Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], null, endOfBanDate, null);
+		BanEntry entry = Bukkit.getBanList(BanList.Type.NAME).addBan(args[0], reason, endOfBanDate, sender.getName());
 
 		if(entry == null){
 			sender.sendMessage(ChatColor.RED + "[TempBan] Error: Player '" + args[0] + "' not found.");
@@ -49,7 +58,8 @@ public class CommandExec implements CommandExecutor {
 
 		Player player = Bukkit.getPlayer(args[0]);
 		if(player != null){
-			player.kickPlayer("[TempBan] You are temp-banned for " + remainingTimeString);
+			String secondLine = reason != null ? "\nReason: " + reason : "";
+			player.kickPlayer("[TempBan] You are temp-banned for " + remainingTimeString + secondLine);
 		}
 
 		return true;

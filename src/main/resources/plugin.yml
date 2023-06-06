@@ -8,5 +8,5 @@ api-version: 1.13
 commands:
    tempban:
       description: Used to temporarily ban online players.
-      usage: /tempban <player> <amount> <unit>
+      usage: /tempban <player> <amount> <unit> [reason]
       aliases: [tban,tb]
