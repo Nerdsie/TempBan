@@ -10,13 +10,3 @@ commands:
       description: Used to temporarily ban online players.
       usage: /tempban <player> <amount> <unit>
       aliases: [tban,tb]
-   tempbanexact:
-      description: Used to temporarily ban online/offline players.
-      usage: /tempbanexact <player> <amount> <unit>
-      aliases: [tbanexact,tbe,tempbane]
-   unban:
-      description: Used to unban banned players.
-      usage: /unban <player>
-   check:
-      description: Used to check player's ban status.
-      usage: /check <player>
