@@ -14,19 +14,9 @@ import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TempBan extends JavaPlugin {
-	public static HashMap<String, Long> banned = new HashMap<String, Long>();
-
 	public static String LegacyDataPath = "plugins/TempBan" + File.separator + "BanList.dat";
-	public TBListener Listener = new TBListener(this);
-	public Server server;
-	public Logger log;
 
 	public void onEnable(){
-		server = this.getServer();
-		log = this.getLogger();
-
-		server.getPluginManager().registerEvents(Listener, this);
-
 		importLegacyBans();
 
 		try {
