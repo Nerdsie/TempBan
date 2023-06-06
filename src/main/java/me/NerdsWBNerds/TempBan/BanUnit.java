@@ -1,12 +1,12 @@
 package me.NerdsWBNerds.TempBan;
 
 public enum BanUnit {
-	SECOND("sec", 1/60), MINUTE("min", 1), HOUR("hour", 60), DAY("day", 60*24), WEEK("week", 60*24*7), MONTH("month", 30*60*24), YEAR("year", 30*60*24*12);
+	SECOND("s", 1.0/60.0), HOUR("h", 60), DAY("d", 60*24), WEEK("w", 60*24*7), MONTH("mo", 30*60*24), MINUTE("m", 1), YEAR("y", 30*60*24*12);
 	
 	public String name;
-	public int multi;
+	public double multi;
 	
-	BanUnit(String n, int mult){
+	BanUnit(String n, double mult){
 		name = n;
 		multi = mult;
 	}
@@ -22,7 +22,7 @@ public enum BanUnit {
 		
 		for(BanUnit unit: BanUnit.values()){
 			if(un.startsWith(unit.name)){
-				return (sec *= unit.multi)*1000;
+				return (long) (sec * unit.multi *1000.0);
 			}
 		}
 		
