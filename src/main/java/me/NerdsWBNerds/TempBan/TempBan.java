@@ -26,13 +26,9 @@ public class TempBan extends JavaPlugin {
 		log = this.getLogger();
 
 		server.getPluginManager().registerEvents(Listener, this);
-		
-		File file = new File(LegacyDataPath);
-		if(file.exists()){
-			importLegacyBans(loadLegacyData());
-			file.delete();
-	    }
-		
+
+		importLegacyBans();
+
 		try {
 			Metrics metrics = new Metrics(this, 18675);
 		} catch (Exception e) {
@@ -43,10 +39,18 @@ public class TempBan extends JavaPlugin {
 	}
 
 	//If anyone updates to this version from an old version, import legacy data to use official Bukkit BanList.
-	void importLegacyBans(Map<String, Long> banned){
-		for (String name : banned.keySet()){
+	void importLegacyBans(){
+		File file = new File(LegacyDataPath);
+		if(!file.exists()) {
+			return;
+		}
+
+		HashMap<String, Long> banned = loadLegacyData();
+		for (String name : banned.keySet()) {
 			Bukkit.getBanList(BanList.Type.NAME).addBan(name, null, new Date(banned.get(name)), null);
 		}
+
+		file.delete();
 	}
 
 	@SuppressWarnings("unchecked")
